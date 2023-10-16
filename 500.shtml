@@ -1,0 +1,89 @@
+<html lang="pt-br"><!--begin::Head--><head><base href="../../">
+    <!-- Basic -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+
+<title>Diges - Desenvolvimento Inteligente de Gestão</title>	
+
+<meta name="keywords" content="Diges" />
+<meta name="description" content="Soluções inteligentes para seu negócio. ">
+<meta name="author" content="okler.net">
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="57x57" href="/img/fav/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/img/fav/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/img/fav/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/img/fav/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/img/fav/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/img/fav/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/img/fav/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/img/fav/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/img/fav/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/img/fav/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/img/fav/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+<!--begin::Fonts(mandatory for all pages)-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700">
+<!--end::Fonts-->
+<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
+<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css">
+<!--end::Global Stylesheets Bundle-->
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_body" class="app-blank bgi-size-cover bgi-position-center bgi-no-repeat" style="background-color: black;">
+<!--begin::Theme mode setup on page load-->
+<!--end::Theme mode setup on page load-->
+<!--begin::Root-->
+<div class="d-flex flex-column flex-root" id="kt_app_root">
+    <!--begin::Page bg image-->
+    <!--end::Page bg image-->
+    <!--begin::Authentication - Signup Welcome Message -->
+    <div class="d-flex flex-column flex-center flex-column-fluid">
+        <!--begin::Content-->
+        <div class="d-flex flex-column flex-center text-center p-10">
+            <!--begin::Wrapper-->
+            <div class="card card-flush w-lg-650px">
+                <div class="card-body py-15 py-lg-15">
+                    <img alt="Logo" src="assets/media/logos/logo-login.png" height="100px">
+                    <!--begin::Title-->
+                    <h1 class="fw-bolder fs-2hx text-gray-900 mb-4">Oops!</h1>
+                    <!--end::Title-->
+                    <!--begin::Text-->
+                    <div class="fw-semibold fs-6 text-gray-500 mb-3">Alguma coisa deu errado, não foi possivel realizar essa ação.</div>
+                    <!--end::Text-->
+                    <!--begin::Illustration-->
+                    <div class="mb-3">
+                        <img class="mx-auto h-lg-400px" style="width:600px" src="assets/media/illustrations/misc/500 Internal Server Error-cuate.svg" alt="" />
+                    </div>
+                    <!--end::Illustration-->
+                    <!--begin::Link-->
+                    <div class="mb-0">
+                        <div class="fw-semibold fs-6 text-gray-500 mb-7">Contate o administrador pelo <a href="mailto:contato@diges.com.br">contato@diges.com.br</a></div>
+                        <a href="index" class="btn btn-warning">Voltar para a Home</a>
+                    </div>
+                    <!--end::Link-->
+                </div>
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Authentication - Signup Welcome Message-->
+</div>
+<!--end::Root-->
+<!--begin::Javascript-->
+<script>var hostUrl = "assets/";</script>
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/js/scripts.bundle.js"></script>
+<!--end::Global Javascript Bundle-->
+<!--end::Javascript-->
