@@ -28,6 +28,7 @@ if ($_POST['action'] == 'login') {
     $_SESSION['USUEMP'] = null;
     $_SESSION['URL'] = null;
     $_SESSION['USUTIPO'] = NULL;
+    $_SESSION['last_activity'] = NULL;
 
     try {
         $Conexao = ConexaoMYSQL::getConnection();
@@ -47,6 +48,7 @@ if ($_POST['action'] == 'login') {
                     $_SESSION['USUTIPO'] = $row['USU_TIPO'];
                     $_SESSION['USUEMPID'] = (($row['USU_ADMIN'] == '1') ? $row['USU_ID'] : $row['USU_EMPRESAID']);
                     $_SESSION['URL'] = 'http://localhost';
+                    $_SESSION['last_activity'] = time();
 
                     $return = 1;
                 }else if($row['USU_ATIVO'] == 'I'){
