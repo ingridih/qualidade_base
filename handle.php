@@ -84,17 +84,29 @@ if ($_POST['action'] == 'resetpassword') {
     $hash = password_hash($randomPassword, PASSWORD_DEFAULT);
 
     $pass = crypt($randomPassword, $hash);
-    try{ 
-        if($Conexao->query("UPDATE QUALIDADE_USUARIO_LOGIN SET USU_SENHA = '".$pass."' WHERE USU_EMAIL = '" . $_POST['email'] . "'")){
-            $assunto = 'Esqueci a senha.';
-            $mensagem = 'Sua nova senha de acesso: <strong>'.$randomPassword.'</strong><br> Lembre-se de trocar a senha o mais rápido possivel.';
-            $email =  $_POST['email'];
-            Envia_Email($assunto, $mensagem, $email, false);
-            echo 1;
-        }else{
+    try {
+        $email = $_POST['email'];
+        $pass = $randomPassword; // Defina $randomPassword como a nova senha desejada
+
+        $stmt = $Conexao->prepare("UPDATE QUALIDADE_USUARIO_LOGIN SET USU_SENHA = :senha WHERE USU_EMAIL = :email");
+        $stmt->bindParam(':senha', $pass, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $rowCount = $stmt->rowCount(); // Verifique quantas linhas foram afetadas
+            if ($rowCount > 0) {
+                $assunto = 'Esqueci a senha.';
+                $mensagem = 'Sua nova senha de acesso: <strong>' . $randomPassword . '</strong><br> Lembre-se de trocar a senha o mais rápido possível.';
+                Envia_Email($assunto, $mensagem, $email, false);
+                echo 1;
+            }else{
+                echo 0;
+            }
+        } else {
             echo 0;
         }
-    }catch (Exception $e) {
+
+    } catch (Exception $e) {
         echo $e->getMessage();
         exit;
     }

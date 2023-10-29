@@ -1,5 +1,4 @@
-<?php
-require_once $_SERVER['DOCUMENT_ROOT']."/menu/session.php";
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/menu/session.php";
 require_once $_SERVER['DOCUMENT_ROOT'].'/pdo/pdomysql.php';
 
 
@@ -11,6 +10,7 @@ class DataTableApi
         'id'         => true,
         "idenficacao" => true,
         "idenficacao_lab" => true,
+        "laboratorio" => true,
         "tipo" => true,
         "urgencia" => true,
         "solicitante" => true,
@@ -188,9 +188,12 @@ class DataTableApi
                 DATE_FORMAT(CA_DATA,'%d/%m/%Y') CA_DATA , 
                 DATE_FORMAT(CA_ANALISE,'%d/%m/%Y') CA_ANALISE , 
                 CA_LAUDO, 
-                CA_OBS_QUALI
+                CA_OBS_QUALI,
+                E_NOME
             FROM QUALIDADE_CARTA 
-            LEFT JOIN QUALIDADE_USUARIO_LOGIN ON USU_ID = CA_SOLICITANTE WHERE CA_DATA BETWEEN '".$dt1."' AND '".$dt2."'");
+            LEFT JOIN QUALIDADE_USUARIO_LOGIN ON USU_ID = CA_SOLICITANTE 
+            LEFT JOIN QUALIDADE_LABORATORIO ON CA_LABORATORIO = E_ID
+            WHERE CA_DATA BETWEEN '".$dt1."' AND '".$dt2."'");
             while ($row = $query->fetch()) {
                 $prod = NULL;
                 $tipo_ar = [];
@@ -210,6 +213,7 @@ class DataTableApi
                     "id" => $row['CA_ID'],
                     "idenficacao" => $row['CA_IDENTIFICACAO_QUALI'],
                     "idenficacao_lab" => $row['CA_IDENTIFICACAO_LAB'],
+                    "laboratorio" => $row['E_NOME'],
                     "tipo" => $tipo,
                     "urgencia" => $row['CA_URGENCIA'],
                     "solicitante" => $row['USU_NOME'],

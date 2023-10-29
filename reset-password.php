@@ -178,34 +178,34 @@ submitButton.addEventListener('click', function (e) {
 							}, 1000);
 							// se o usuário errou a senha ou login - erro
 						} else if (response == 0) {
-							setTimeout(function() { 
-								Swal.fire({
-									text: "Usuário e/ou senha invalido(s).",
-									icon: "error",
-									buttonsStyling: false,
-									confirmButtonText: "Entendi",
-									customClass: {
-										confirmButton: "btn btn-primary"
-									}
-								});
-							}, 1000);
-							
+							Swal.fire({
+								text: "Usuário não encontrado.",
+								icon: "error",
+								buttonsStyling: false,
+								confirmButtonText: "OK",
+								customClass: {
+									confirmButton: "btn btn-primary"
+								}
+							});
+							submitButton.setAttribute('data-kt-indicator', 'off');
+							submitButton.disabled = false;
 							// error para usuario inativo
 						} else {
-							setTimeout(function() { 
-								Swal.fire({
-									text: "Error: "+response,
-									icon: "error",
-									buttonsStyling: false,
-									confirmButtonText: "Ok",
-									customClass: {
-										confirmButton: "btn btn-primary"
-									}
-								});
-							}, 1000);
+							submitButton.setAttribute('data-kt-indicator', 'off');
+	                		submitButton.disabled = false;
 							
+							Swal.fire({
+								text: "Error: "+response,
+								icon: "error",
+								buttonsStyling: false,
+								confirmButtonText: "Ok",
+								customClass: {
+									confirmButton: "btn btn-primary"
+								}
+							});
 						} 
 					}
+					
 				});
 
             }

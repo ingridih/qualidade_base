@@ -1,6 +1,4 @@
-<?php 
-
-require_once $_SERVER['DOCUMENT_ROOT']."/menu/session.php";
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/menu/session.php";
 
 if($_SESSION['USUTIPO'] != 'QUALIDADE'){ 
     header('Location: /login'); 
@@ -117,6 +115,7 @@ ooooooo------ooo---ooo---ooo
                                                             <tr class="text-start text-gray-400 fw-bold fs-8 text-uppercase gs-0">
                                                                 <th>ID</th>
                                                                 <th>Carta</th>
+                                                                <th>Laboratório</th>
                                                                 <th>Tipo</th>
                                                                 <th>Urgência</th>
                                                                 <th>Data de Envio</th>
@@ -339,6 +338,7 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: 'id' },
                 { data: 'idenficacao' },
+                { data: 'laboratorio' },
                 { data: 'tipo' },
                 { data: 'urgencia' },
                 { data: 'data' },
@@ -376,7 +376,7 @@ var KTDatatablesServerSide = function () {
                     }
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     render: function (data, type, row) {
                         const valores = data.split('|');
                         let retorno = ''; 
@@ -399,7 +399,7 @@ var KTDatatablesServerSide = function () {
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     className: 'text-center',
                     render: function (data, type, row) {
                         if(data == '1'){
@@ -410,7 +410,7 @@ var KTDatatablesServerSide = function () {
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 8,
                     className: 'text-center',
                     render: function (data, type, row) {
                         if(data == 'A'){
