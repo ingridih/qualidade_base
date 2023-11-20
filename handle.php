@@ -86,7 +86,6 @@ if ($_POST['action'] == 'resetpassword') {
     $pass = crypt($randomPassword, $hash);
     try {
         $email = $_POST['email'];
-        $pass = $randomPassword; // Defina $randomPassword como a nova senha desejada
 
         $stmt = $Conexao->prepare("UPDATE QUALIDADE_USUARIO_LOGIN SET USU_SENHA = :senha WHERE USU_EMAIL = :email");
         $stmt->bindParam(':senha', $pass, PDO::PARAM_STR);
