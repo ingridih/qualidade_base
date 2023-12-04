@@ -1,6 +1,4 @@
-<?php 
-
-session_start();
+<?php session_start();
 require_once $_SERVER['DOCUMENT_ROOT'].'/pdo/pdomysql.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/script/gerador_senha.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/script/mail.php';
@@ -56,12 +54,12 @@ if ($_POST['action'] == 'cadastrar-analise') {
                     $e = explode('|', $el);
                     if($e[1] != ""){
                         $Conexao->query("UPDATE QUALIDADE_ANALISE 
-                        SET AE_RESULTADO = '".$e[3]."', AE_METODO = '".$e[4]."' 
+                        SET AE_RESULTADO = '".$e[3]."', AE_METODO = '".$e[4]."', AE_UNIDADE = '".$e[5]."', AE_LQ = '".$e[6]."', AE_VR = '".$e[7]."', AE_ENSAIO = '".$e[8]."' 
                         WHERE AE_ID = ".$e[1]);
                     }else{ 
                         $Conexao->query("INSERT INTO QUALIDADE_ANALISE 
-                        (AE_PRODUTO_ID, AE_ELEMENTO, AE_RESULTADO, AE_METODO) 
-                        VALUES ('".$e[0]."', '".$e[2]."', '".$e[3]."', '".$e[4]."')");
+                        (AE_PRODUTO_ID, AE_ELEMENTO, AE_RESULTADO, AE_METODO, AE_UNIDADE, AE_LQ, AE_VR, AE_ENSAIO) 
+                        VALUES ('".$e[0]."', '".$e[2]."', '".$e[3]."', '".$e[4]."', '".$e[5]."', '".$e[6]."','".$e[7]."', '".$e[8]."')");
                         
                     }
                 }
@@ -83,7 +81,7 @@ if ($_POST['action'] == 'cadastrar-analise') {
             $mensagem = 'A análise foi realizada por  '.$_SESSION['USUNOME'];
             $email = $row_email['USU_EMAIL'];
     
-            Envia_Email($assunto, $mensagem, $email, false);
+            //Envia_Email($assunto, $mensagem, $email, false);
         }
 
         
@@ -113,7 +111,7 @@ if ($_POST['action'] == 'gerarct') {
     $query = $Conexao->query("SELECT CA_ID, CA_STATUS, CA_SOLICITANTE, CA_TIPO, CA_IDENTIFICACAO_QUALI, CA_IDENTIFICACAO_LAB,
             CA_LABORATORIO, CA_URGENCIA, CA_OBS_QUALI, CA_OBS_LAB, CA_DATA, USU_NOME, USU_EMPRESA_NOME, USU_EMAIL, 
             PO_PRODUTO, PO_PROD_DESC, PO_LOTE, PO_NOTA, DATE_FORMAT(PO_DATA_FAB,'%d/%m/%Y') PO_DATA_FAB, PO_TIPO, 
-            DATE_FORMAT(PO_DATA_VALIDADE,'%d/%m/%Y') PO_DATA_VALIDADE, CA_OBS_QUALI, CA_URGENCIA, PO_ID, PO_REG_MAPA, PO_OBS_QUALI 
+            DATE_FORMAT(PO_DATA_VALIDADE,'%d/%m/%Y') PO_DATA_VALIDADE, CA_OBS_QUALI, CA_URGENCIA, PO_ID, PO_REG_MAPA, PO_OBS_QUALI, PO_URGENTE
         FROM QUALIDADE_CARTA 
         INNER JOIN QUALIDADE_PRODUTO ON PO_ID_CARTA = CA_ID
         LEFT JOIN QUALIDADE_USUARIO_LOGIN ON USU_ID = CA_SOLICITANTE 
@@ -234,7 +232,7 @@ if ($_POST['action'] == 'gerarct') {
                         <td class="font-td"><p class="font-td">'.$a['PO_DATA_FAB'].'</p></td>
                         <td class="font-td"><p class="font-td">'.$a['PO_DATA_VALIDADE'].'</p></td>
                         <td class="font-td"><p class="font-td">'.$a['PO_REG_MAPA'].'</p></td>
-                        <td class="font-td"><p class="font-td">'.(($a['CA_URGENCIA'] == 1) ? '<b>sim</b>' : 'não').'</p></td>
+                        <td class="font-td"><p class="font-td">'.(($a['PO_URGENTE'] == 1) ? '<b>sim</b>' : 'não').'</p></td>
                         <td class="font-td"><p class="font-td">'.$tipo.'</p></td>
                     </tr>';
                     $amostra++;
@@ -282,18 +280,17 @@ if ($_POST['action'] == 'editar-analise') {
                                 if($e[0] == $op[0]){
                                     if($e[1] != ""){
                                         $Conexao->query("UPDATE QUALIDADE_ANALISE 
-                                        SET AE_RESULTADO = '".$e[3]."', AE_METODO = '".$e[4]."' 
+                                        SET AE_RESULTADO = '".$e[3]."', AE_METODO = '".$e[2]."', AE_UNIDADE = '".$e[5]."', AE_LQ = '".$e[6]."', AE_VR = '".$e[7]."', AE_ENSAIO = '".$e[8]."'
                                         WHERE AE_ID = ".$e[1]);
                                     }else{ 
                                         $Conexao->query("INSERT INTO QUALIDADE_ANALISE 
-                                        (AE_PRODUTO_ID, AE_ELEMENTO, AE_RESULTADO, AE_METODO) 
-                                        VALUES ('".$e[0]."', '".$e[2]."', '".$e[3]."', '".$e[4]."')");
+                                        (AE_PRODUTO_ID, AE_ELEMENTO, AE_RESULTADO, AE_METODO, AE_UNIDADE, AE_LQ, AE_VR, AE_ENSAIO) 
+                                        VALUES ('".$e[0]."', '".$e[2]."', '".$e[3]."', '".$e[4]."', '".$e[5]."', '".$e[6]."', '".$e[7]."', '".$e[8]."')");
                                         
                                     }
                                 }
                             }
                         }
-                        
                     }
                 }
                 if($Conexao->query("UPDATE QUALIDADE_CARTA 
@@ -313,7 +310,7 @@ if ($_POST['action'] == 'editar-analise') {
                     $mensagem = 'A análise foi realizada por  '.$_SESSION['USUNOME'];
                     $email = $row_email['USU_EMAIL'];
             
-                    Envia_Email($assunto, $mensagem, $email, false);
+                    //Envia_Email($assunto, $mensagem, $email, false);
                 }
             }else{
                 $return = 2;
@@ -738,7 +735,7 @@ if ($_POST['action'] == 'carrega_baixar_laudo'){
             }else{
                 $html .= '<tr><td colspan="4" style="text-align:center">Nenhum Registro encontrado.</td></tr></tbody></table>';
             }
-        }else if($row_0['CA_LAUDO'] == 'gera'){
+        }else if($row_0['CA_LAUDO'] == 'gera' || $row_0['CA_LAUDO'] == null){
             $html = '<div style="text-align:center">
             <a href="#" class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary hover-elevate-up gerar_laudo_pdf" id="'.$_POST['id'].'" data-id="A"> 
                 <i class="fa-solid fa-download fs-2x"></i>
@@ -751,11 +748,18 @@ if ($_POST['action'] == 'carrega_baixar_laudo'){
             </a>
             </div>';
         }else{
-            $html = '<div style="">
-                <span style="font-weight:600; font-size:14px">Configure os dados de como será emitido o laudo. </span><br>
-                <span style="font-weight:500">Configuração automatica:</span> <a href="laudo" style="font-weight:600">AQUI</a><br>
-                <span style="font-weight:500">Configuração para anexo:</span> Clique no botão "configurar Laudo" e selecione "anexar Laudo".
-            </div>';
+            if($_SESSION['USUTIPO'] == 'LABORATORIO'){
+                $html = '<div style="">
+                    <span style="font-weight:600; font-size:14px">Configure os dados de como será emitido o laudo. </span><br>
+                    <span style="font-weight:500">Configuração automatica:</span> <a href="laudo" style="font-weight:600">AQUI</a><br>
+                    <span style="font-weight:500">Configuração para anexo:</span> Clique no botão "configurar Laudo" e selecione "anexar Laudo".
+                </div>';
+            }ELSE{
+                $html = '<div style="">
+                    <span style="font-weight:600; font-size:14px">O Laboratório ainda não configurou ou anexou o Laudo.</span>
+                </div>';
+            }
+            
         }
     }
 
@@ -794,9 +798,12 @@ if ($_POST['action'] == 'gerarlaudo') {
     $query = $Conexao->query("SELECT PO_ID, PO_ID_CARTA, PO_NUMERO, PO_PRODUTO, PO_PROD_DESC, PO_LOTE, PO_QTD, DATE_FORMAT(PO_DATA_FAB,'%d/%m/%Y') PO_DATA_FAB, 
             PO_REG_MAPA,DATE_FORMAT(PO_DATA_VALIDADE,'%d/%m/%Y') PO_DATA_VALIDADE, PO_TIPO, PO_NOTA, 
             PO_OBS_LAB, PO_OBS_QUALI, PO_ID_LAB, PO_ID_SOLICITANTE, PO_DATA_CRIADO, PO_OBS_LAUDO, PO_CLIENTE, PO_METAIS_PESADOS, 
-            DATE_FORMAT(PO_DATA_FAB,'%d/%m/%Y') PO_DATA_FAB, PO_APROVADO, PO_CONTRA, CA_LABORATORIO, 
-            CA_SOLICITANTE, USU_NOME, USU_EMAIL, CA_IDENTIFICACAO_LAB, DATE_FORMAT(CA_DATA,'%d/%m/%Y') CA_DATA, DATE_FORMAT(CA_ANALISE,'%d/%m/%Y') CA_ANALISE 
-            FROM QUALIDADE_PRODUTO INNER JOIN QUALIDADE_CARTA ON CA_ID = PO_ID_CARTA LEFT JOIN QUALIDADE_USUARIO_LOGIN ON USU_ID = CA_SOLICITANTE 
+            PO_APROVADO, PO_CONTRA, CA_LABORATORIO, USU_EMPRESA_NOME, 
+            CA_SOLICITANTE, USU_NOME, USU_EMAIL, CA_IDENTIFICACAO_LAB, DATE_FORMAT(CA_DATA,'%d/%m/%Y') CA_DATA, DATE_FORMAT(CA_ANALISE,'%d/%m/%Y') CA_ANALISE, E_EMAIL 
+            FROM QUALIDADE_PRODUTO 
+            INNER JOIN QUALIDADE_CARTA ON CA_ID = PO_ID_CARTA 
+            LEFT JOIN QUALIDADE_USUARIO_LOGIN ON USU_ID = CA_SOLICITANTE 
+            LEFT JOIN QUALIDADE_LABORATORIO ON E_ID = CA_LABORATORIO
             WHERE PO_ID_CARTA = '".$id."'  ".$where." ");
     while ($row = $query->fetch()) {
         $array_produto[] = $row;
@@ -851,62 +858,98 @@ if ($_POST['action'] == 'gerarlaudo') {
 
         $html .= ' 
             <link href="'.$_SESSION['URL'].'/vendor/mpdf/mpdf/mpdf.css" type="text/css" rel="stylesheet" media="mpdf" />';
-
             if($logoarq != ""and $logoarq != null){
-                $html .= '<div style="text-align: center;">
-                    <img style="width: 170px;" src="'.$_SERVER['DOCUMENT_ROOT'].'/file/config/'.$logoarq.'" />
-                </div>';
-            }else{
-                $html .= $logotexto;
+                $html .= '<table border="0">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img style="width: 120px;" src="'.$_SERVER['DOCUMENT_ROOT'].'/file/config/'.$logoarq.'" alt="Logo" />
+                            </td>
+                            <td style="text-align: center;color:black;font-weight: bold;font-family: Arial, Helvetica, sans-serif">
+                                
+                                <div style="margin-left: 10px"><h1>RELATÓRIO DE ENSAIOS</h1></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="font-family: Arial, Helvetica, sans-serif;font-size:12px">
+                                <span style="font-size:11px;">RELATÓRIO DE ENSAIO No:</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span>'.$lab_ref.'   </span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="font-size:11px;">REVISÃO 1</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr style="margin:1px;border: 1px solid black">';
             }
-
             $html .= '
-            '.$topo.'
-                <br />
-                <table class="table table-bordered font-ti">
-                    <tbody style="width: 100%">
+                <table class="font-t2" border="0" style="margin-top: 0px;width: 100%;">
+                    <tbody style="">
                         <tr>
-                            <td style="text-align:center"><p>solicitação / nº amostra </p></td>
-                            <td style="text-align:center"><p>Entrada</p></td>
-                            <td style="text-align:center"><p>Saida</p></td>
+                            <td style="text-align:left; width: 40%">Cliente: '.strtoupper($p['USU_EMPRESA_NOME']).'</td>
+                            <td style="text-align:left; width: 20%"></td>
+                            <td style="text-align:left; width: 40%">Solicitante: '.strtoupper($p['USU_NOME']).'</td>
                         </tr>
                         <tr>
-                            <td style="text-align:center">'. $lab_ref .' / '.$p['PO_NUMERO']. '</td>
-                            <td style="text-align:center">'. $envio .'</td>
-                            <td style="text-align:center">'. $retorno .'</td>
+                            <td style="text-align:left">Município: IBATE - SP</td>
+                            <td style="text-align:left"></td>
+                            <td style="text-align:left">Telefone: 19 9 8163-4444</td>
                         </tr>
                         <tr>
-                            <td>Solicitado por</td>
-                            <td colspan="2">Nome do Solicitante - teste@teste.com.br</td>
+                            <td style="text-align:left">Endereço: AV. LUIS PAVAO, 2001</td>
+                            <td style="text-align:right">SP 002970-0</td>
+                            <td style="text-align:left">Email: '.strtoupper($p['E_EMAIL']).'</td>
                         </tr>
-
                         <tr>
-                            <td>Cliente</td>
-                            <td colspan="2">'.$p['PO_CLIENTE'] .'</td>
-                        </tr>';
-                        
-                        $html .= '<tr>
-                            <td>Nota</td>
-                            <td colspan="2">'.$p['PO_NOTA'].'</td>
-                        </tr>';
+                            <td colspan="3" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">DADOS DA AMOSTRA</td>
+                        </tr>
+                       
+                        ';
                     $html .= '</tbody>
                 </table>
-
-                <table class="table table-bordered font-ti">
-                    <tbody style="width: 100%">
+                <table class="font-t2" border="0" style="margin-top: 0px;width: 100%;">
+                    <tbody style="">
                         <tr>
-                            <td>Produto</td>
-                            <td>Lote</td>
-                            <td>FAB/COLETA</td>
-                            <td>VALIDADE</td>
-                            <td>REG. MAPA</td>
+                            <td style="text-align:left; width: 50%">Material amostrado: Fertilizantes</td>
+                            <td style="text-align:left; width: 50%">Código da amostra: '.strtoupper($p['PO_NUMERO']).'</td>
                         </tr>
                         <tr>
-                            <td>'. $p['PO_PRODUTO'].', '. $p['PO_PROD_DESC'].'</td>
-                            <td>'. $p['PO_LOTE'] .'</td>
-                            <td>'. $p['PO_DATA_FAB'] .'</td>
-                            <td>'. $p['PO_DATA_VALIDADE'] .'</td>
-                            <td>'. $p['PO_REG_MAPA'] .'</td>
+                            <td style="text-align:left">Identificação da amostra: '.strtoupper($p['PO_ID']).'</td>
+                            <td style="text-align:left"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left">Data de entrada: '.strtoupper($p['CA_DATA']).'</td>
+                            <td style="text-align:left">Data de retorno: '.strtoupper($p['CA_ANALISE']).'</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">INFORMAÇÕES DA AMOSTRAGEM</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="font-t2" border="0" style="margin-top: 0px;width: 100%;">
+                    <tbody style="">
+                        <tr>
+                            <td style="text-align:left; width: 50%">Data da Coleta: '.$p['PO_DATA_FAB'].'</td>
+                            <td style="text-align:left; width: 50%"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left">Quantidade: '.strtoupper($p['PO_QTD']).'</td>
+                            <td style="text-align:left">Validade: '.strtoupper($p['PO_DATA_VALIDADE']).'</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left">Descrição: '.strtoupper($p['PO_PROD_DESC']).'</td>
+                            <td style="text-align:left">Registro: '.strtoupper($p['PO_REG_MAPA']).'</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left">Fabricação: '.strtoupper($p['PO_DATA_FAB']).'</td>
+                            <td style="text-align:left"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Nota: É responsabilidade do cliente a descrição da amostra coletada e os resultados se aplicam à amostra conforme recebida.</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">RESULTADOS DOS ENSAIOS</td>
                         </tr>
                     </tbody>
                 </table>
@@ -914,10 +957,10 @@ if ($_POST['action'] == 'gerarlaudo') {
                 <table class="table table-bordered font-ti">
                     <tbody style="width: 100%">
                         <tr>
-                            <td style="width:25%">PARAMETRO ANALISADO</td>
-                            <td style="width:15%;text-align:center">Garantias</td>
-                            <td style="width:15%;text-align:center">Resultado</td>
-                            <td style="width:35%;text-align:left">Método</td>
+                            <td style="width:25%;background-color: black;color: white;font-weight: bold">PARAMETRO ANALISADO</td>
+                            <td style="width:15%;background-color: black;color: white;font-weight: bold;text-align:center">Garantias</td>
+                            <td style="width:15%;background-color: black;color: white;font-weight: bold;text-align:center">Resultado</td>
+                            <td style="width:35%;background-color: black;color: white;font-weight: bold;text-align:left">Método</td>
                         </tr>';
 
                         foreach($array_analise[$p['PO_ID']] as $el){
@@ -960,23 +1003,33 @@ if ($_POST['action'] == 'gerarlaudo') {
                         $html .= '<p style="font-size:10px">*VMA = VALOR MAXIMO ADMITIDO EM mg POR kg DE FERTILIZANTE CONFORME INST NORMATIVA 27-2.006 alterada pela IN 07 2016.</p><hr>';
                     }
                 }
+                $html .= '
+                <table class="font-t2" border="0" style="margin-top: 0px;width: 100%;">
+                    <tbody style="">
+                        <tr>
+                            <td colspan="1" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">LEGENDA</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;font-weight: bold">LQ; Limite de Quantificação</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;font-weight: bold">VR: Valor de referência conforme legislação adequada</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;font-weight: bold">N/D: Não Detectado</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">OBSERVAÇÕES</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;font-weight: bold">'.$p['PO_OBS_LAUDO'].'</td>
+                        </tr>
+                    </tbody>
+                </table>';
 
-           $html .= '<p class="font2">Observação: '.$p['PO_OBS_LAUDO'].'</p>  
-
-           <p style="font-size:11px">RESULTADOS EXPRESSOS SOBRE AMOSTRA TAL COMO RECEBIDA. (p/p)<br>
-           Estes resultados têm significação restrita e aplica-se a amostra recebida.<br>
-           Não é permitida reprodução parcial deste relatório.</p>';
-        
-       
             $html .= '
-            <img style="width:250px" src="'.$_SERVER['DOCUMENT_ROOT'].'/file/config/'.$assitatura.'" />'; 
-    
-           
-        //  $html .= '<p style="font-size:10px">METODOLOGIA: MANUAL DE MÉTODOS ANALÝTICOS OFICIAIS PARA FERTILIZANTES E CORRETIVOS 2017- ISBN (IN 037 2017 DO MAPA).
-        //      <br>Métodos reconhecidos pelo Ministério da Agricultura para análise de contaminantes. U.S. EPA 3050B; 7000 A; 7470 A; 7471 A; 7061 A; 7741A.
-        //      </p>';
+            <img style="" src="'.$_SERVER['DOCUMENT_ROOT'].'/file/config/'.$assitatura.'" />'; 
 
-        $html .= trim($bottom);
 
         //$mpdf->SetHTMLFooter('');
         $mpdf->CSSselectMedia = 'mpdf';

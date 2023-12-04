@@ -1,6 +1,4 @@
-<?php 
-
-require_once $_SERVER['DOCUMENT_ROOT']."/menu/session.php";
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/menu/session.php";
 
 if($_SESSION['USUTIPO'] == 'QUALIDADE'){ 
 	header('Location: /login'); 
@@ -237,7 +235,7 @@ ooooooo------ooo---ooo---ooo
 																			</div>
 																			<span class="badge badge-light-primary" style="font-size:16px">Garantias</span>';
 
-																			$query4 = $Conexao->query("SELECT AE_ID, AE_PRODUTO_ID, AE_ELEMENTO_ID, AE_ELEMENTO, AE_GARANTIA, AE_VMA, AE_RESULTADO, AE_METODO, EQ_VMA
+																			$query4 = $Conexao->query("SELECT AE_ID, AE_PRODUTO_ID, AE_ELEMENTO_ID, AE_ELEMENTO, AE_GARANTIA, AE_VMA, AE_RESULTADO, AE_METODO, EQ_VMA, AE_UNIDADE, AE_LQ, AE_VR, AE_ENSAIO
 																			FROM QUALIDADE_ANALISE LEFT JOIN QUALIDADE_ELEMENTOS_QUIMICOS
 																			ON AE_ELEMENTO_ID = EQ_ID
 																			WHERE AE_PRODUTO_ID = ".$row2['PO_ID']);
@@ -250,56 +248,80 @@ ooooooo------ooo---ooo---ooo
 																					<div class="col-md-1">
 																						<input type="text" class="form-control garantia" id="" name="garantia" placeholder="" value="'.number_format($row4['AE_GARANTIA'], 2, ',', '.').'" disabled>
 																					</div>
-																					<div class="col-md-2 fv-row">
-																						<input type="number" class="form-control result" id="'.$row2['PO_ID'].'|'.$row4['AE_ID'].'" min="0" name="result" placeholder="Insira o resultado" value="'.$row4['AE_RESULTADO'].'" >
+																					<div class="col-md-1 fv-row">
+																						<input type="number" class="form-control result" id="'.$row2['PO_ID'].'|'.$row4['AE_ID'].'" min="0" name="result" placeholder="Resultado" value="'.$row4['AE_RESULTADO'].'" >
+																					</div>
+																					<div class="col-md-1 fv-row">
+																						<input type="text" class="form-control unidade" id="'.$row2['PO_ID'].'|'.$row4['AE_ID'].'"  name="unidade" placeholder="Unidade" value="'.$row4['AE_UNIDADE'].'" >
+																					</div>
+																					<div class="col-md-1">
+																						<input type="text" class="form-control lq" id="'.$row2['PO_ID'].'|'.$row4['AE_ID'].'"  name="lq" placeholder="L.Q" value="'.$row4['AE_LQ'].'" >
+																					</div>
+																					<div class="col-md-1">
+																						<input type="text" class="form-control vrr" id="'.$row2['PO_ID'].'|'.$row4['AE_ID'].'"  name="vrr" placeholder="VR" value="'.$row4['AE_VR'].'" >
 																					</div>';
 																						if($row2['PO_METAIS_PESADOS'] == '1'){
-																							echo '<div class="col-md-3">
-																							<input type="text" class="form-control vma" id="" name="vma" placeholder="Se possuir, vai exibir VMA" value="'.(($row4['AE_VMA'] == "") ? $row4['EQ_VMA'] : $row4['AE_VMA']).'" disabled>
+																							echo '<div class="col-md-1">
+																							<input type="text" class="form-control vma" id="" name="vma" placeholder="VMA" value="'.(($row4['AE_VMA'] == "") ? $row4['EQ_VMA'] : $row4['AE_VMA']).'" disabled>
 																						</div>';
 																					}
-																					echo '<div class="col-md-4">
+																					echo '<div class="col-md-3">
 																						<select class="form-select metodo" data-control="select2" name="metodo" data-placeholder="Selecione o método de análise ou crie.">
 																							<option></option>';
 																							foreach($array_metodo as $met){
 																								echo '<option value="'.$met['MA_ID'].'">'.$met['MA_METODO'].'</option>';
 																							}
-																						echo '</select>
+																					echo '</select>
+																					</div>
+																					<div class="col-md-1 fv-row">
+																						<input type="text" class="form-control ensaio" id="'.$row2['PO_ID'].'|'.$row4['AE_ID'].'"  name="ensaio" placeholder="Ensaio" value="'.$row4['AE_ENSAIO'].'" >
 																					</div>
 																				</div>';
 																			}
 																			echo '<div class="divmais'.$row2['PO_ID'].'"></div>';
 																			// -------------------------------------- adicionar novo elemento ----------------------------------------------
-																			echo '<h6>Se algum elemento a mais for encontrado, informe manualmente.</h6>
-																			<div class="form-group row mb-5">
-																				<div class="col-md-1">
-																					<input type="text" class="form-control novo_sigla'.$row2['PO_ID'].'" id="" name="novo_sigla" placeholder="Sigla" value="" >
-																				</div>
-																				<div class="col-md-2">
-																					<input type="text" class="form-control novo_elemento'.$row2['PO_ID'].'" id="" name="novo_elemento" placeholder="Elemento" value="" >
-																				</div>
-																				<div class="col-md-2">
-																					<input type="number" class="form-control novo_resultado'.$row2['PO_ID'].'" id="" name="novo_resultado" placeholder="Resultado" value="" >
-																				</div>
-																				<div class="col-md-4">
-																					<select class="form-select novo_metodo novo_metodo'.$row2['PO_ID'].'" data-control="select2" name="novo_metodo" data-placeholder="Selecione o método de análise ou crie.">
-																						<option></option>';
-																						foreach($array_metodo as $met){
-																							echo '<option value="'.$met['MA_ID'].'">'.$met['MA_METODO'].'</option>';
-																						}
-																					echo '</select>
-																				</div>
-																				<div class="col-md-3">
-																					<button id="'.$row2['PO_ID'].'" type="button" class="btn btn-info btn-novoel"  name="btn-novoel">
-																						<span class="indicator-label">
-																							Adicionar Elemento
-																						</span>
-																						<span class="indicator-progress">
-																							Processando... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-																						</span>
-																					</button>
-																				</div>
-																			</div>';
+																			//echo '<h6>Se algum elemento a mais for encontrado, informe manualmente.</h6>
+																			// <div class="form-group row mb-5">
+																			// 	<div class="col-md-1">
+																			// 		<input type="text" class="form-control novo_sigla'.$row2['PO_ID'].'" id="" name="novo_sigla" placeholder="Sigla" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-2">
+																			// 		<input type="text" class="form-control novo_elemento'.$row2['PO_ID'].'" id="" name="novo_elemento" placeholder="Elemento" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-1">
+																			// 		<input type="number" class="form-control novo_resultado'.$row2['PO_ID'].'" id="" name="novo_resultado" placeholder="Resultado" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-1">
+																			// 		<input type="text" class="form-control novo_unidade'.$row2['PO_ID'].'" id="" name="novo_unidade" placeholder="Unidade" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-1">
+																			// 		<input type="text" class="form-control novo_lq'.$row2['PO_ID'].'" id="" name="novo_lq" placeholder="L.Q" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-1">
+																			// 		<input type="text" class="form-control novo_vr'.$row2['PO_ID'].'" id="" name="novo_vr" placeholder="VR" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-3">
+																			// 		<select class="form-select novo_metodo novo_metodo'.$row2['PO_ID'].'" data-control="select2" name="novo_metodo" data-placeholder="Selecione o método de análise ou crie.">
+																			// 			<option></option>';
+																			// 			foreach($array_metodo as $met){
+																			// 				echo '<option value="'.$met['MA_ID'].'">'.$met['MA_METODO'].'</option>';
+																			// 			}
+																			// 		echo '</select>
+																			// 	</div>
+																			// 	<div class="col-md-1">
+																			// 		<input type="text" class="form-control novo_ensaio'.$row2['PO_ID'].'" id="" name="novo_unidade" placeholder="Ensaio" value="" >
+																			// 	</div>
+																			// 	<div class="col-md-3">
+																			// 		<button id="'.$row2['PO_ID'].'" type="button" class="btn btn-info btn-novoel"  name="btn-novoel">
+																			// 			<span class="indicator-label">
+																			// 				+ Elemento
+																			// 			</span>
+																			// 			<span class="indicator-progress">
+																			// 				Processando... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+																			// 			</span>
+																			// 		</button>
+																			// 	</div>
+																			// </div>';
 																			echo'<hr>
 																		</div>
 																		<!--end::Body-->
@@ -366,6 +388,10 @@ $(document).ready(function() {
 	$(".novo_metodo").select2({
 		tags: true
 	});
+
+	Inputmask({
+		"mask" : "99/99/9999"
+	}).mask(".ensaio");
 });
 
  
@@ -441,6 +467,10 @@ submitButton.addEventListener("click", function (e) {
 					const inputhidden = document.getElementsByName('inputhidden');
 					const elemento = document.getElementsByName('elemento');
 					const result = document.getElementsByName('result');
+					const unidade = document.getElementsByName('unidade');
+					const lq = document.getElementsByName('lq');
+					const vrr = document.getElementsByName('vrr');
+					const ensaio = document.getElementsByName('ensaio');
 					const metodo = document.getElementsByName('metodo');
 
 					for (var j = 0; j < elemento.length; j++) {
@@ -449,8 +479,7 @@ submitButton.addEventListener("click", function (e) {
 						var selectedIndex = select.selectedIndex;
 						var selectedOption = select.options[selectedIndex];
 						var textoSelecionado = selectedOption.text;
-						elementos.push(result[j].id+'|'+elemento[j].value+'|'+result[j].value+'|'+textoSelecionado);
-						
+						elementos.push(result[j].id+'|'+elemento[j].value+'|'+result[j].value+'|'+textoSelecionado+'|'+unidade[j].value+'|'+lq[j].value+'|'+vrr[j].value+'|'+ensaio[j].value);
 					}
 					$.post({
 						url: "handle.php", // the resource where youre request will go throw
