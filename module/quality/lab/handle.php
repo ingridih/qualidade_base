@@ -814,7 +814,7 @@ if ($_POST['action'] == 'gerarlaudo') {
         $envio = $row['CA_DATA'];
         $retorno = $row['CA_ANALISE'];
 
-        $query2 = $Conexao->query("SELECT AE_ELEMENTO, AE_PRODUTO_ID, AE_GARANTIA, AE_VMA, AE_RESULTADO, AE_METODO
+        $query2 = $Conexao->query("SELECT AE_ELEMENTO, AE_PRODUTO_ID, AE_GARANTIA, AE_VMA, AE_RESULTADO, AE_METODO, AE_UNIDADE, AE_LQ, AE_VR, AE_ENSAIO
         FROM QUALIDADE_ANALISE 
         WHERE AE_PRODUTO_ID = '". $row['PO_ID']."' ORDER BY AE_ELEMENTO");
         while ($row2 = $query2->fetch()) {
@@ -982,7 +982,6 @@ if ($_POST['action'] == 'gerarlaudo') {
                     <tbody style="width: 100%">
                         <tr>
                             <td style="width:25%">PARAMETRO ANALISADO - MP</td>
-                            <td style="width:15%;text-align:center">VMA</td>
                             <td style="width:15%;text-align:center">RESULTADOS</td>
                             <td style="width:35%;text-align:left">Métodos</td>
                         </tr>';
@@ -992,7 +991,6 @@ if ($_POST['action'] == 'gerarlaudo') {
 
                             $html .= '<tr>
                                 <td style="text-align:center">'. $elp['AE_ELEMENTO'] .'</td>
-                                <td style="text-align:center">'. $elp['AE_VMA'] .'</td>
                                 <td style="text-align:center">'. $elp['AE_RESULTADO'] .'</td>
                                 <td style="text-align:left">'. $elp['AE_METODO'].'</td>
                             </tr>';
@@ -1017,6 +1015,9 @@ if ($_POST['action'] == 'gerarlaudo') {
                         </tr>
                         <tr>
                             <td style="text-align:left;font-weight: bold">N/D: Não Detectado</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">REFERÊNCIAS METODOLÓGICAS</td>
                         </tr>
                         <tr>
                             <td colspan="1" style="text-align:center;background-color: #008ce7;color: white;font-weight: bold">OBSERVAÇÕES</td>
