@@ -386,12 +386,6 @@ $('#kt_docs_repeater_nested').repeater({
             $(this).slideDown();
 			$('[data-kt-repeater="select2"]').select2({
 			});
-			$(".maskdata").flatpickr({
-				dateFormat: "d/m/Y",
-				locale: "pt",
-				defaultDate: "today"
-				
-			});
         },
 
         hide: function (deleteElement) {

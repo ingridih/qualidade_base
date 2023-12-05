@@ -1,0 +1,107 @@
+@page {
+	
+}
+
+span{
+  font-size:12px;
+}
+
+.font-ti {
+    font-size: 11px;
+}
+
+.font-san {
+    font-family: sans-serif;
+    font-size: 9px;
+    color: #6b6c6f;
+}
+
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  
+}
+
+.table {
+    border-collapse: collapse !important;
+  }
+
+.table th,
+.table td {
+  padding: 0.3rem;
+  vertical-align: top;
+  border-top: 1px solid #e3e6f0;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #e3e6f0;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #e3e6f0;
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem;
+}
+
+.table-bordered {
+  border: 1px solid #e3e6f0;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #e3e6f0;
+}
+
+.table-bordered thead th,
+.table-bordered thead td {
+  border-bottom-width: 2px;
+}
+
+.table-borderless th,
+.table-borderless td,
+.table-borderless thead th,
+.table-borderless tbody + tbody {
+  border: 0;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+h3, .h3 {
+  font-size: 1.0rem;
+  font-family: sans-serif;
+  color: #6b6c6f;
+}
+h2, .h2 {
+  font-size: 2.0rem;
+  color: #6b6c6f;
+}
+.phon{
+    font-weight: bold;
+    font-size: 9px;
+    margin-bottom: 10px !important;
+}
+.font-td{
+    font-size: 9px;
+}
+
+.phon2{
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 10px !important;
+}
+
+.font2{
+    font-size: 12px;
+    font-family: sans-serif;
+}
