@@ -209,7 +209,7 @@ if ($_POST['action'] == 'carrega_historico') {
 
     $Conexao = ConexaoMYSQL::getConnection();
     try {
-        $query2 = $Conexao->query("SELECT H_ID, H_USUID, H_USUNOME, H_TIPO, H_DESCRICAO, DATE_FORMAT(H_DATA,'%d/%m/%Y') H_DATA
+        $query2 = $Conexao->query("SELECT H_ID, H_USUID, H_USUNOME, H_TIPO, H_DESCRICAO, DATE_FORMAT(H_DATA,'%d/%m/%Y') H_DATA2
         FROM HISTORICO order by H_DATA desc limit 20");
         while($row2 = $query2->fetch()){ 
         
@@ -228,7 +228,7 @@ if ($_POST['action'] == 'carrega_historico') {
                         <div class="fs-5 fw-semibold mb-2">'.$array_status[$row2['H_TIPO']].'</div>
                         <div class="fs-6 text-gray-600">'.$row2['H_DESCRICAO'].'</div>
                         <div class="d-flex align-items-center mt-1 fs-6">
-                            <div class="text-muted me-2 fs-7">'.$row2['H_USUNOME'].' - '.$row2['H_DATA'].'</div>
+                            <div class="text-muted me-2 fs-7">'.$row2['H_USUNOME'].' - '.$row2['H_DATA2'].'</div>
                         </div>
                     </div>
                 </div>
