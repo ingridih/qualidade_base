@@ -472,6 +472,7 @@ if ($_POST['action'] == 'busca-resultado') {
                                     $garantia = is_numeric($row4['AE_GARANTIA']) ? $row4['AE_GARANTIA'] : 0;
                                     $resultado = is_numeric($row4['AE_RESULTADO']) ? $row4['AE_RESULTADO'] : 0;
                                     $str = 0;
+                                    $string = null;
                                     if($resultado < $garantia){
                                         switch (true) {
                                             case $garantia < 0.1:
@@ -496,7 +497,8 @@ if ($_POST['action'] == 'busca-resultado') {
                                         $diferenca = $garantia - $v_tolerado;
                                         $apurado = ($diferenca != 0) ? ($garantia - $resultado) / $diferenca : 0;
                                         $str = ($resultado < $v_tolerado && $apurado <= 3) ? 1 : 0;
-                                        $string = ($str == 1) ? 'style="font-weight: 500;color:#f1416c"' : '';
+                                        
+                                        $string = (($str == 1) ? 'style="font-weight: 500;color:#f1416c"' : '');
                                     }
                                     $html .= '                         
                                         <tr>
@@ -535,17 +537,21 @@ if ($_POST['action'] == 'avaliar-ct') {
         $causa = $_POST['causa'];
         $estudo = $_POST['estudo'];
 
+        $checkArray = array_map(function($item) {
+            return intval($item['valor']);
+        }, $_POST['check']);
+
         $i = 0;
         foreach($_POST['radio'] as $radio){
             $contra = 0;
 
             if(isset($_POST['check'])){
-                if(in_array($radio['dataid'], $_POST['check'])){
+                if (in_array(intval($radio['dataid']), $checkArray)) {
                     $contra = 1;
                     $existecp = 1;
                 }
             }   
-
+            
             $sql_update = "UPDATE QUALIDADE_PRODUTO SET PO_APROVADO = '".$radio['valor']."', PO_CONTRA = '".$contra."' WHERE PO_ID = '".$radio['dataid']."'";
             $stmt_update = $Conexao->prepare($sql_update);
 
