@@ -12,7 +12,7 @@ class ConexaoMYSQL
         global $dbConfig;
         try {
             if (!isset($connection)) {
-                $connection = new PDO('mysql:host=br14.hostgator.com.br;dbname=digesc43_base_qualidade', 'digesc43_admin', 'hJ.&d)K5#$Sn');
+                $connection = new PDO('mysql:seuhost.com.br;dbname=suabase', 'usuario', 'senha');
                 $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
             return $connection;
@@ -37,7 +37,7 @@ class ConexaoMYSQL_ticket
         global $dbConfig;
         try {
             if (!isset($connection)) {
-                $connection = new PDO('mysql:host=br14.hostgator.com.br;dbname=digesc43_ticket', 'digesc43_user_ticket', 'P!mIB^p7@6I86^GC');
+                $connection = new PDO('mysql:seuhost.com.br;dbname=suabase', 'usuario', 'senha');
                 $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
             return $connection;
